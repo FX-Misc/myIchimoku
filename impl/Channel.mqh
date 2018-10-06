@@ -153,6 +153,14 @@ public:
                      return NULL;
                   }
                   
+                  bool setValue(T val, int idx){
+                     if (idx<ArraySize(pipe) && idx>-1){
+                        pipe[idx]=val;
+                        return true;
+                     }
+                     return false;
+                  }
+                  
                   int push(T value){
                      int pos = push(pipe,value);
                      if (pos>-1){

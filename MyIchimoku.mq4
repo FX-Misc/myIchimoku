@@ -6,8 +6,6 @@
 #property version   "1.20"
 #property strict
 
-
-
 #include "impl/MyTrader.mqh"
 
 //+------------------------------------------------------------------+
