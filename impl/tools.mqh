@@ -268,3 +268,82 @@ ENUM_TIMEFRAMES nextTimeframe(ENUM_TIMEFRAMES timeframe){
       }
    }
 }
+
+int pushMax(int &Toppers[], ENUM_TIMEFRAMES timeframe, int window, int shift){
+
+   // https://www.mql5.com/en/forum/144092    
+    int ExtDepth=12; int ExtDeviation=5; int ExtBackstep=3;
+    int HighMapBuffer=1; int LowMapBuffer=2;
+      int size = ArraySize(Toppers);
+      ArrayInitialize(Toppers,-1);
+   
+   int to = window+shift;
+   int from = shift;
+   int j=0;
+   for (int shift=from; shift<to; shift++){
+      
+       double ZigZag=iCustom(Symbol(),timeframe, "ZigZag",ExtDepth, ExtDeviation, ExtBackstep,0, shift);
+   //Print("=MAX================= ZigZag: ", ZigZag, "high: ", High[shift], " shift: ",shift);
+       if(High[shift]==ZigZag){
+         ArrayResize(Toppers,++size);
+         Toppers[j++]=shift;
+       }
+       
+    /*
+       Toppers[j]=iCustom(
+           Symbol(),0,"ZigZag",
+           ExtDepth, ExtDeviation, ExtBackstep,
+           HighMapBuffer, shift);
+       
+       if(Toppers[j]>0.1) Toppers[j]=Toppers[j];
+       */
+     }
+/*
+Print("Looking at Toppers: =========");
+for(int i=0; i<ArraySize(Toppers); i++)
+{
+Print("("+i+"):  "+Toppers[i], " time: ",Time[i]);
+}
+*/
+   return j;
+   
+}
+
+int pushMin(int &Bottoms[], ENUM_TIMEFRAMES timeframe, int window, int shift){
+
+       int ExtDepth=12; int ExtDeviation=5; int ExtBackstep=3;
+       int ZigzagBuffer=0; int HighMapBuffer=1; int LowMapBuffer=2;
+       
+   ArrayInitialize(Bottoms,-1);
+   
+   int size = ArraySize(Bottoms);
+   int to = window+shift;
+   int from = shift;
+   int j=0;
+   for (int shift=from; shift<to; shift++){
+      
+       double ZigZag=iCustom(Symbol(), timeframe, "ZigZag",ExtDepth, ExtDeviation, ExtBackstep,0, shift);
+   
+       if(ZigZag>0 && Low[shift]==ZigZag){
+         ArrayResize(Bottoms,++size);
+         Bottoms[j++]=shift;
+       }
+       
+       //if (ZigZag>0)
+       //  Print("================== ZigZag: ", ZigZag,  "low: ", Low[shift], " shift: ",shift);
+         
+       //if(ZigZag>0.1 && High[shift]==ZigZag) Toppers[j]=ZigZag;
+       /*
+       Bottoms[j]=iCustom(
+           Symbol(),0,"ZigZag",
+           ExtDepth, ExtDeviation, ExtBackstep,
+           LowMapBuffer, shift
+       );
+       
+       if(Bottoms[j]>0.1) Bottoms[j]=Bottoms[j];
+       */
+      
+     }
+     return j;
+}
+

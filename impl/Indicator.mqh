@@ -258,6 +258,7 @@ public:
       struct OrderDetails {
          int TrailingProfit;
          int TrailingStop;
+         double Price;
          /*
          Order operation type of the currently selected order. It can be any of the following values:
       
@@ -272,10 +273,12 @@ public:
          OrderDetails(){
             this.TrailingProfit=Trailing_Profit;
             this.TrailingStop=Trailing_Stop;
+            this.Price=Close[0];
          }
          OrderDetails(OrderDetails &od){
             this.TrailingProfit=od.TrailingProfit;
             this.TrailingStop=od.TrailingStop;
+            this.Price=od.Price;
             this.Type=od.Type;
          }
       };

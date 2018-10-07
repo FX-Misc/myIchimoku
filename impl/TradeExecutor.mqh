@@ -123,7 +123,7 @@ protected:
                double stoploss   = Bid - stop;
                double takeprofit = Bid + profit;
                //if (_debug)Print( "Going Long: Price(", Ask,") TP(",takeprofit,"), SL(",stoploss,")");
-               int ticket = OrderSend( Symbol(), OP_BUY, Lots, Ask, 3, stoploss, takeprofit, "My order", 16384, 0, Green );
+               int ticket = OrderSend( Symbol(), OP_BUY, Lots, order.Price, 3, stoploss, takeprofit, "My order", 16384, 0, Green );
                if(ticket>0 && push(orders,ticket)){
                   if(OrderSelect(ticket,SELECT_BY_TICKET,MODE_TRADES))
                      DrawArrow("Buy",OrderOpenPrice(),SYMBOL_ARROWUP,Green,"Open Buy");
@@ -138,7 +138,7 @@ protected:
                //--- calculated SL and TP prices must be normalized
                double stoploss   = Ask + stop;
                double takeprofit = Ask - profit;
-               int ticket = OrderSend(Symbol(), OP_SELL, Lots, Bid, 3, stoploss, takeprofit, "My order", 16384, 0, Red );
+               int ticket = OrderSend(Symbol(), OP_SELL, Lots, order.Price, 3, stoploss, takeprofit, "My order", 16384, 0, Red );
                if(ticket>0 && push(orders,ticket)) {
                   if(OrderSelect(ticket,SELECT_BY_TICKET,MODE_TRADES))
                      DrawArrow("Sell",OrderOpenPrice(),SYMBOL_ARROWDOWN,Red,"Open Sell");
